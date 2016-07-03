@@ -1,0 +1,68 @@
+<style>
+    #error_explanation h2 {
+        display: none;
+    }
+    
+    #error_explanation {
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Sign Up</h3>
+                </div>
+                <div class="panel-body">
+                    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+	                <%= devise_error_messages! %>
+                    <div class="field form-group">
+                        <%= f.label :email %>
+                        <br/>
+                        <%= f.email_field :email, autofocus: true, class: "form-control" %>
+                    </div>
+                    <div class="field form-group">
+                        <%= f.label :first_name %>
+                        <br/>
+                        <%= f.text_field :first_name, class: "form-control" %>
+                    </div>
+                    <div class="field form-group">
+                        <%= f.label :last_name %>
+                        <br/>
+                        <%= f.text_field :last_name, class: "form-control" %>
+                    </div>
+                    <div class="field form-group">
+                        <%= f.label :password %>
+                        <% if @minimum_password_length %>
+                        <em>(<%= @minimum_password_length %> characters minimum)</em>
+                        <% end %>
+                        <br/>
+                        <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+                    </div>
+                    <div class="field form-group">
+                        <%= f.label :password_confirmation %>
+                        <br/>
+                        <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
+                    </div>
+					<div class="field form-group">
+                        <%= f.check_box :is_server %> &nbsp;
+						<%= f.label :is_server, "Server Account" %>
+                        <%= f.label :remember_me %>
+                    </div>
+                    <div class="actions form-group">
+                        <%= f.submit "Sign up", class: "btn btn-lg btn-success btn-block" %>
+                    </div>
+                    <% end %>
+                    <%= render "devise/shared/links" %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
