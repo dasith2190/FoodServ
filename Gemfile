@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'simple_form'
 gem 'bootstrap_sb_admin_base_v2'
 gem 'devise'
 gem "therubyracer"
