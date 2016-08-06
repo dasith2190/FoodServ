@@ -1,0 +1,97 @@
+<div class="col-md-8">
+	<%= simple_form_for @menu_item, url: '/menu'  do |f| %>
+		<%= f.input :name, label: "Menu Item Name"%>
+		<%= f.input :description, as: :text%>			
+		<%= f.input :is_build_your_own, label: "Build Your Own",  :input_html => {:id => "build_your_own"} %>
+	
+		<div id = "build_your_own_content">
+			<div class="panel panel-default">
+			    <div class="panel-heading" role="tab" id="headingOne">
+			      <h4 class="panel-title">
+			        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+			          Plate Options
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+			      <div class="panel-body">
+			      	<div class="form-inline">
+						<b>Name</b>
+						<input name="group_name[]" class="string optional form-control" type="text"/>
+						<b>Price</b>
+						<input name="additional_price[]" class="string optional form-control" type="text"/>
+						<b>Maximum Allowed</b>
+						<input name="max_allowed[]" class="string optional form-control" type="text"/>
+					</div>
+					<br/>
+					<b>Menu Item Content</b>
+					<input name="menuitemcontent0[]" placeholder="Name" type="text" class="string optional form-control"/>
+					<span id="add-new-row0"></span>
+					<br/>
+					<a class="btn" onclick="addContentRow(0)">+ Add Choice</a>
+			      </div>
+			    </div>
+		  </div>
+		  <div id="add-new-option"></div>
+				
+		 <a class="btn" onclick="addGroupRow()">+ Add Option</a>
+		</div>
+		
+		<br/>
+		<%= f.button :submit ,  "Submit", class: "btn btn-primary" %>
+	<% end %>
+	
+</div>
+
+
+<script>
+	var num_groups = 1;
+	
+	function addGroupRow() {
+		var group_str = '\
+						<div class="panel panel-default">\
+							    <div class="panel-heading" role="tab" id="heading' + num_groups + '">\
+							      <h4 class="panel-title">\
+							        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse' + num_groups + '" aria-expanded="true" aria-controls="collapse' + num_groups + '">\
+							          Plate Options\
+							        </a>\
+							      </h4>\
+							    </div>\
+							    <div id="collapse' + num_groups + '" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading' + num_groups + '">\
+							      <div class="panel-body">\
+							      	<div class="form-inline">\
+										<b>Name</b>\
+										<input name="group_name[]" class="string optional form-control" type="text"/>\
+										<b>Price</b>\
+										<input name="additional_price[]" class="string optional form-control" type="text"/>\
+										<b>Maximum Allowed</b>\
+										<input name="max_allowed[]" class="string optional form-control" type="text"/>\
+									</div>\
+									<br/>\
+									<b>Menu Item Content</b>\
+									<input name="menuitemcontent0[]" placeholder="Name" type="text" class="string optional form-control"/>\
+									<span id="add-new-row' + num_groups + '"></span>\
+									<br/>\
+									<a class="btn" onclick="addContentRow(' + num_groups + ')">+ Add Choice</a>\
+							      </div>\
+							    </div>\
+						  </div>';
+		$("#add-new-option").append(group_str);
+		num_groups++;
+	}
+	
+	function addContentRow(group_num) {
+		console.log("adsads")
+		$("#add-new-row" + group_num).append('<br/><input placeholder="Name" name="menuitemcontent' + group_num +'[]" type="text" class="string optional form-control"/>');
+	}
+	
+	$(document).ready(function(){
+		$('.collapse').collapse();
+	});	
+	
+	$("#build_your_own").click(function() {
+		$("#build_your_own_content").toggle();
+		
+	});
+	
+</script>
