@@ -1,7 +1,8 @@
 <div class="col-md-8">
 	<%= simple_form_for @menu_item, url: '/menu'  do |f| %>
-		<%= f.input :name, label: "Menu Item Name"%>
-		<%= f.input :description, as: :text%>			
+		<%= f.input :name, label: "Menu Item Name" %>
+		<%= f.input :description, as: :text %>
+		<%= f.input :price %>				
 		<%= f.input :is_build_your_own, label: "Build Your Own",  :input_html => {:id => "build_your_own"} %>
 	
 		<div id = "build_your_own_content">
@@ -69,7 +70,7 @@
 									</div>\
 									<br/>\
 									<b>Menu Item Content</b>\
-									<input name="menuitemcontent0[]" placeholder="Name" type="text" class="string optional form-control"/>\
+									<input name="menuitemcontent' + num_groups + '[]" placeholder="Name" type="text" class="string optional form-control"/>\
 									<span id="add-new-row' + num_groups + '"></span>\
 									<br/>\
 									<a class="btn" onclick="addContentRow(' + num_groups + ')">+ Add Choice</a>\
