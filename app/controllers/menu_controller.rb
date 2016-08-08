@@ -3,7 +3,8 @@ class MenuController < ApplicationController
   def new
     @menu_item = MenuItem.new
   end
-  
+
+
   def create
     @menu_item = MenuItem.new(menu_params)
     user = current_user.id
@@ -14,12 +15,8 @@ class MenuController < ApplicationController
       menu_options = params["group_name"]
       additional_price = params["additional_price"]
       max_allowed = params["max_allowed"]
-      print menu_options.length
-      print "****************"
       
       for i in 0..menu_options.length - 1
-        print i
-        print "****************"
         menu_group = MenuItemContentGroup.create(MenuItem_id: @menu_item.id, name: menu_options[i], additional_price: additional_price[i], max_allowed: max_allowed[i])
         menu_item_content = params["menuitemcontent" + i.to_s]
         for j in 0..menu_item_content.length - 1
@@ -34,6 +31,30 @@ class MenuController < ApplicationController
         format.html { render :new }
         format.json { render json: @menu_item.errors, status: :unprocessable_entity }
     end
+  end
+
+  
+  def edit
+    @menu_item = MenuItem.find_by!(id: params[:id], user_id: current_user.id)
+  end
+  
+  
+  def update
+    @menu_item = MenuItem.find_by!(id: params[:id], user_id: current_user.id)
+    build_your_own = @menu_item.is_build_your_own
+    
+    if @menu_item.update(menu_params)
+      
+      #If not build your own remove all groups
+      if build_your_own and !@menu_item.is_build_your_own
+        @menu_item.delete_groups()
+      end
+      
+      removed_groups = params["removed_record"]
+      @menu_item.remove_groups(removed_groups)
+      
+      
+    end  
   end
 
   private

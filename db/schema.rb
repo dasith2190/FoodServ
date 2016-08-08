@@ -11,22 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160805232040) do
+ActiveRecord::Schema.define(version: 20160808185256) do
 
   create_table "menu_item_content_groups", force: :cascade do |t|
     t.integer  "MenuItem_id"
     t.string   "name"
     t.integer  "max_allowed"
     t.float    "additional_price"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.boolean  "is_deleted",       default: false
   end
 
   create_table "menu_item_contents", force: :cascade do |t|
     t.integer  "MenuContentGroup_id"
     t.string   "ingredient"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.boolean  "is_deleted",          default: false
   end
 
   create_table "menu_items", force: :cascade do |t|
@@ -35,8 +37,9 @@ ActiveRecord::Schema.define(version: 20160805232040) do
     t.string   "description"
     t.float    "price"
     t.boolean  "is_build_your_own"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.boolean  "is_deleted",        default: false
   end
 
   create_table "users", force: :cascade do |t|

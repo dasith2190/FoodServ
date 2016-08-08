@@ -1,0 +1,101 @@
+<div class="col-md-8">
+<%= simple_form_for @menu_item, url: menu_path(@menu_item.id)  do |f| %>
+	<%= f.input :name, label: "Menu Item Name" %>
+	<%= f.input :description, as: :text %>
+	<%= f.input :price %>				
+	<%= f.input :is_build_your_own, label: "Build Your Own",  :input_html => {:id => "build_your_own"} %>
+	
+	<% if @menu_item.is_build_your_own %>
+		<% @menu_item.MenuItemContentGroup.each_with_index do |group, index| %>
+		<div id = "build_your_own_content_edit">
+			<div class="panel panel-default">
+			    <div class="panel-heading" role="tab" id="headingOne">
+			      <h4 class="panel-title">
+			        <a data-groupid="<%= group.id %>" role="button" id="rm-btn-<%= group.id %>" class="btn btn-danger rm-btn action-btn" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+			          Remove Group
+			        </a>
+			      </h4>
+				  <input type = "hidden" name = "removed_record[]" id="rm-record-<%= group.id %>"/>
+			    </div>
+			    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+			      <div class="panel-body">
+					<div class="form-inline">
+						<input type = "hidden" name="group_id[]" value="<%= group.id %>"/>
+						<b>Name</b>
+						<input name="group_name[]" value="<%= group.name %>" class="string optional form-control" type="text"/>
+						<b>Price</b>
+						<input name="additional_price[]" value="<%= group.additional_price %>" class="string optional form-control" type="text"/>
+						<b>Maximum Allowed</b>
+						<input name="max_allowed[]" value="<%= group.max_allowed %>" class="string optional form-control" type="text"/>
+					</div>
+					<br/>
+					<b>Menu Item Content</b>
+					<% group.MenuItemContent.each do |ing| %>
+						<div class="col-md-11">
+							<input type="hidden" name="removed_content[]" id="rm-content-inp-<%= ing.id %>"/>
+							<input id="ing-content-<%= ing.id %>" name="menuitemcontent<%= ing.id %>[]" value="<%= ing.ingredient %>" placeholder="Name" type="text" class="string optional form-control ing-input"/>
+							<span id="rm-btn-disp-<%= ing.id %>" onclick="removeContentEdit(<%= ing.id %>)" class="glyphicon glyphicon-remove inline"></span>
+							<span id="add-btn-disp-<%= ing.id %>" onclick="undoRemoveContentEdit(<%= ing.id %>)" style="display: none;" class="glyphicon glyphicon-ok inline"></span>
+						</div>
+						<br/>
+					<% end %>
+					<div class="col-md-11"><span id="add-new-row<%= index %>"></span></div>
+					<a class="btn" onclick="addContentRow(<%= index %>)">+ Add Choice</a>
+				 </div>
+				</div>
+			</div>
+		</div>
+		<div id="add-new-option"></div>
+		<a class="btn" onclick="addGroupRow()">+ Add Option</a>
+		<% end %>
+	<% end%>
+	<%= f.button :submit ,  "Submit", class: "btn btn-primary" %>
+<% end %>
+</div>
+
+<script>
+	var num_groups = <%= @menu_item.MenuItemContentGroup.count %>;
+	$(document).ready(function() {
+		$(".action-btn").click(function() {
+			var group_id = $(this).data("groupid");
+			var class_name = $(this).attr("class");
+			if (class_name.indexOf("rm-btn") != -1) {
+				$(this).addClass('add-btn btn-success').removeClass('rm-btn btn-danger');
+				$(this).text("Undo");
+				$("#rm-record-"+group_id).val(group_id);
+			}
+			else if (class_name.indexOf("add-btn") != -1) {
+				$(this).addClass('rm-btn btn-danger').removeClass('add-btn btn-success');
+				$(this).text("Remove");
+				$("#rm-record-"+group_id).val("");
+			}
+		});
+	});
+	
+	function undoRemoveContentEdit(id) {
+		$("#ing-content-" + id).prop('disabled', false);
+		$("#rm-content-inp-" + id).val("");
+				
+		$("#add-btn-disp-" + id).css({
+			display: 'none'
+		});		
+		
+		$("#rm-btn-disp-" + id).css({
+			display: 'block'
+		});
+	}
+	function removeContentEdit(id) {
+		$("#ing-content-" + id).prop('disabled', true);
+		$("#rm-content-inp-" + id).val(id);
+		$("#rm-btn-disp-" + id).css({
+			display: 'none'
+		});
+		
+		$("#add-btn-disp-" + id).css({
+			display: 'block'
+		});
+	}
+</script>
+
+<%= javascript_include_tag 'menujs' %>
+
