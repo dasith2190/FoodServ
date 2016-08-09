@@ -12,18 +12,26 @@ class MenuController < ApplicationController
     build_your_own = params["menu_item"]["is_build_your_own"]
     
     if build_your_own == "1" and @menu_item.save
-      menu_options = params["group_name"]
-      additional_price = params["additional_price"]
-      max_allowed = params["max_allowed"]
+
       
-      for i in 0..menu_options.length - 1
-        menu_group = MenuItemContentGroup.create(MenuItem_id: @menu_item.id, name: menu_options[i], additional_price: additional_price[i], max_allowed: max_allowed[i])
-        menu_item_content = params["menuitemcontent" + i.to_s]
-        for j in 0..menu_item_content.length - 1
-         MenuItemContent.create(MenuContentGroup_id: menu_group.id, ingredient: menu_item_content[j])
-        end
+      
+      #####################
+      new_groups = params["menu_group_num"]
+      
+      for i in 0..new_groups.length - 1
+        group_name = params["group_name_" + new_groups[i]]
+        group_price = params["additional_price_" + new_groups[i]]
+        group_max = params["max_allowed_" + new_groups[i]]
+        menu_group = MenuItemContentGroup.create(MenuItem_id: @menu_item.id, name: group_name, additional_price: group_price, max_allowed: group_max)
         
+        menu_group_content = params["menuitemcontent" + new_groups[i]]
+        
+        for j in 0..menu_group_content.length - 1
+          MenuItemContent.create(MenuContentGroup_id: menu_group.id, ingredient: menu_group_content[j])
+        end
       end
+    
+      #####################
     elsif @menu_item.save
         format.html { redirect_to bid_path(@menu_item.id), notice: 'Menu Item was successfully submitted.' }
         format.json { render :show, status: :created, location: @menu_item }
@@ -92,7 +100,7 @@ class MenuController < ApplicationController
           
           menu_group_content = params["menuitemcontent" + new_groups[i]]
           
-          for j in 0..menu_group_content.length
+          for j in 0..menu_group_content.length - 1
             MenuItemContent.create(MenuContentGroup_id: menu_group.id, ingredient: menu_group_content[j])
           end
         end
