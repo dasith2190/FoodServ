@@ -22,11 +22,11 @@
 					<div class="form-inline">
 						<input type = "hidden" name="group_id[]" value="<%= group.id %>"/>
 						<b>Name</b>
-						<input name="group_name[]" value="<%= group.name %>" class="string optional form-control" type="text"/>
+						<input name="group_name_<%= group.id %>" value="<%= group.name %>" class="string optional form-control" type="text"/>
 						<b>Price</b>
-						<input name="additional_price[]" value="<%= group.additional_price %>" class="string optional form-control" type="text"/>
+						<input name="additional_price_<%= group.id %>" value="<%= group.additional_price %>" class="string optional form-control" type="text"/>
 						<b>Maximum Allowed</b>
-						<input name="max_allowed[]" value="<%= group.max_allowed %>" class="string optional form-control" type="text"/>
+						<input name="max_allowed_<%= group.id %>" value="<%= group.max_allowed %>" class="string optional form-control" type="text"/>
 					</div>
 					<br/>
 					<b>Menu Item Content</b>
@@ -39,8 +39,8 @@
 						</div>
 						<br/>
 					<% end %>
-					<div class="col-md-11"><span id="add-new-row<%= index %>"></span></div>
-					<a class="btn" onclick="addContentRow(<%= index %>)">+ Add Choice</a>
+					<div class="col-md-11"><span id="add-new-rowe<%= group.id %>"></span></div>
+					<a class="btn" onclick="addContentRow('e<%= group.id %>')">+ Add Choice</a>
 				 </div>
 				</div>
 			</div>

@@ -11,12 +11,13 @@ function addGroupRow() {
 						    <div id="collapse' + num_groups + '" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading' + num_groups + '">\
 						      <div class="panel-body">\
 						      	<div class="form-inline">\
+									<input type="hidden" name="menu_group_num[]" value="'+num_groups+'"/>\
 									<b>Name</b>\
-									<input name="group_name[]" class="string optional form-control" type="text"/>\
+									<input name="group_name_' + num_groups + '" class="string optional form-control" type="text"/>\
 									<b>Price</b>\
-									<input name="additional_price[]" class="string optional form-control" type="text"/>\
+									<input name="additional_price_' + num_groups + '" class="string optional form-control" type="text"/>\
 									<b>Maximum Allowed</b>\
-									<input name="max_allowed[]" class="string optional form-control" type="text"/>\
+									<input name="max_allowed_' + num_groups + '" class="string optional form-control" type="text"/>\
 								</div>\
 								<br/>\
 								<b>Menu Item Content</b>\
@@ -32,7 +33,7 @@ function addGroupRow() {
 }
 
 function addContentRow(group_num) {
-	$("#add-new-row" + group_num).append('<br/><input placeholder="Name" name="menuitemcontent' + group_num +'[]" type="text" class="string optional form-control"/>');
+	$("#add-new-row" + group_num).append('<br/><input placeholder="Name" name="menuitemcontent' + group_num + '[]" type="text" class="string optional form-control"/>');
 }
 
 $(document).ready(function(){
