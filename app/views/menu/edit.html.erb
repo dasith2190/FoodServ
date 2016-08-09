@@ -7,6 +7,7 @@
 	
 	<% if @menu_item.is_build_your_own %>
 		<% @menu_item.MenuItemContentGroup.each_with_index do |group, index| %>
+		<% if !group.is_deleted %>
 		<div id = "build_your_own_content_edit">
 			<div class="panel panel-default">
 			    <div class="panel-heading" role="tab" id="headingOne">
@@ -31,13 +32,15 @@
 					<br/>
 					<b>Menu Item Content</b>
 					<% group.MenuItemContent.each do |ing| %>
-						<div class="col-md-11">
-							<input type="hidden" name="removed_content[]" id="rm-content-inp-<%= ing.id %>"/>
-							<input id="ing-content-<%= ing.id %>" name="menuitemcontent<%= ing.id %>[]" value="<%= ing.ingredient %>" placeholder="Name" type="text" class="string optional form-control ing-input"/>
-							<span id="rm-btn-disp-<%= ing.id %>" onclick="removeContentEdit(<%= ing.id %>)" class="glyphicon glyphicon-remove inline"></span>
-							<span id="add-btn-disp-<%= ing.id %>" onclick="undoRemoveContentEdit(<%= ing.id %>)" style="display: none;" class="glyphicon glyphicon-ok inline"></span>
-						</div>
-						<br/>
+						<% if !ing.is_deleted %>
+							<div class="col-md-11">
+								<input type="hidden" name="removed_content[]" id="rm-content-inp-<%= ing.id %>"/>
+								<input id="ing-content-<%= ing.id %>" name="menuitemcontent<%= ing.id %>" value="<%= ing.ingredient %>" placeholder="Name" type="text" class="string optional form-control ing-input"/>
+								<span id="rm-btn-disp-<%= ing.id %>" onclick="removeContentEdit(<%= ing.id %>)" class="glyphicon glyphicon-remove inline"></span>
+								<span id="add-btn-disp-<%= ing.id %>" onclick="undoRemoveContentEdit(<%= ing.id %>)" style="display: none;" class="glyphicon glyphicon-ok inline"></span>
+							</div>
+							<br/>
+						<% end %>
 					<% end %>
 					<div class="col-md-11"><span id="add-new-rowe<%= group.id %>"></span></div>
 					<a class="btn" onclick="addContentRow('e<%= group.id %>')">+ Add Choice</a>
@@ -45,6 +48,7 @@
 				</div>
 			</div>
 		</div>
+		<% end %>
 		<div id="add-new-option"></div>
 		<a class="btn" onclick="addGroupRow()">+ Add Option</a>
 		<% end %>

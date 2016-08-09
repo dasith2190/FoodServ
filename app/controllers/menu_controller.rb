@@ -68,22 +68,23 @@ class MenuController < ApplicationController
         menu_groups = @menu_item.MenuItemContentGroup.where(is_deleted: false)
         group_ids = params["group_id"]
         #update existing groups
-        for i in 0..group_ids.length - 1
+        for i in 0..group_ids.size - 1
           begin
             menu_group = menu_groups.find(group_ids[i])
-            menu_group.update(name: params["group_name_" + menu_group.id], max_allowed: params["max_allowed_" + menu_group.id], additional_price: params["additional_price_" + menu_group.id])
+            menu_group.update(name: params["group_name_" + menu_group.id.to_s], max_allowed: params["max_allowed_" + menu_group.id.to_s], additional_price: params["additional_price_" + menu_group.id.to_s])
             menu_content = menu_group.MenuItemContent.where(is_deleted: false)
             
             #Update existing content
             for content in menu_content
-              content.update(ingredients: params["ing-content-" + content.id.to_s])
+              content.update(ingredient: params["menuitemcontent" + content.id.to_s])
             end
             
             #Add new content to group
-            new_content = params["menuitemcontente" + menu_groups.id]
-            
-            for j in 0..new_content.length - 1
-                MenuItemContent.create(MenuContentGroup_id: menu_groups.id, ingredients: new_content[j])
+            new_content = params["menuitemcontente" + menu_group.id.to_s]
+            if new_content
+              for j in 0..new_content.size - 1
+                  MenuItemContent.create(MenuContentGroup_id: menu_group.id, ingredient: new_content[j])
+              end
             end
           rescue ActiveRecord::RecordNotFound
           end
@@ -91,17 +92,18 @@ class MenuController < ApplicationController
         
         #Add new groups and content
         new_groups = params["menu_group_num"]
-        
-        for i in 0..new_groups.length - 1
-          group_name = params["group_name_" + new_groups[i]]
-          group_price = params["additional_price_" + new_groups[i]]
-          group_max = params["max_allowed_" + new_groups[i]]
-          menu_group = MenuItemContentGroup.create(MenuItem_id: @menu_item.id, name: group_name, additional_price: group_price, max_allowed: group_max)
-          
-          menu_group_content = params["menuitemcontent" + new_groups[i]]
-          
-          for j in 0..menu_group_content.length - 1
-            MenuItemContent.create(MenuContentGroup_id: menu_group.id, ingredient: menu_group_content[j])
+        if new_groups
+          for i in 0..new_groups.count - 1
+            group_name = params["group_name_" + new_groups[i].to_s]
+            group_price = params["additional_price_" + new_groups[i].to_s]
+            group_max = params["max_allowed_" + new_groups[i].to_s]
+            menu_group = MenuItemContentGroup.create(MenuItem_id: @menu_item.id, name: group_name, additional_price: group_price, max_allowed: group_max)
+            
+            menu_group_content = params["menuitemcontent" + new_groups[i].to_s]
+            
+            for j in 0..menu_group_content.length - 1
+              MenuItemContent.create(MenuContentGroup_id: menu_group.id, ingredient: menu_group_content[j])
+            end
           end
         end
       end
