@@ -1,7 +1,14 @@
 == README
 
-##Run the following after checking out
-<tt>rails generate bootstrap:install static</tt>__
-<tt>rails generate simple_form:install --bootstrap</tt>__
-<tt>bundle install</tt>__
-<tt>rake db:migrate__
+## Run the following after checking out
+
+
+<tt>rails generate bootstrap:install static
+
+<tt>rails generate simple_form:install --bootstrap  
+
+<tt>bundle install  
+
+
+<tt>rake db:migrate  
+
