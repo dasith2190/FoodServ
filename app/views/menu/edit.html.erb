@@ -10,15 +10,15 @@
 		<% if !group.is_deleted %>
 		<div id = "build_your_own_content_edit">
 			<div class="panel panel-default">
-			    <div class="panel-heading" role="tab" id="headingOne">
+			    <div class="panel-heading" role="tab" id="heading<%= group.id %>">
 			      <h4 class="panel-title">
-			        <a data-groupid="<%= group.id %>" role="button" id="rm-btn-<%= group.id %>" class="btn btn-danger rm-btn action-btn" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-			          Remove Group
+			        <a data-groupid="<%= group.id %>" role="button" id="rm-btn-<%= group.id %>" class="btn btn-danger rm-btn action-btn" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= group.id %>" aria-expanded="true" aria-controls="collapse<%= group.id %>">
+			          Remove
 			        </a>
 			      </h4>
 				  <input type = "hidden" name = "removed_record[]" id="rm-record-<%= group.id %>"/>
 			    </div>
-			    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+			    <div id="collapse<%= group.id %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%= group.id %>">
 			      <div class="panel-body">
 					<div class="form-inline">
 						<input type = "hidden" name="group_id[]" value="<%= group.id %>"/>
@@ -49,10 +49,10 @@
 			</div>
 		</div>
 		<% end %>
-		<div id="add-new-option"></div>
-		<a class="btn" onclick="addGroupRow()">+ Add Option</a>
 		<% end %>
 	<% end%>
+	<div id="add-new-option"></div>
+	<a class="btn" onclick="addGroupRow()">+ Add Option</a>
 	<%= f.button :submit ,  "Submit", class: "btn btn-primary" %>
 <% end %>
 </div>

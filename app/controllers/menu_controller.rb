@@ -11,11 +11,8 @@ class MenuController < ApplicationController
     @menu_item.user_id = user
     build_your_own = params["menu_item"]["is_build_your_own"]
     
-    if build_your_own == "1" and @menu_item.save
-
+    if build_your_own == "1" and @menu_item.save      
       
-      
-      #####################
       new_groups = params["menu_group_num"]
       
       for i in 0..new_groups.length - 1
@@ -31,7 +28,6 @@ class MenuController < ApplicationController
         end
       end
     
-      #####################
     elsif @menu_item.save
         format.html { redirect_to bid_path(@menu_item.id), notice: 'Menu Item was successfully submitted.' }
         format.json { render :show, status: :created, location: @menu_item }
