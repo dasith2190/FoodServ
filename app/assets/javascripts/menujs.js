@@ -12,16 +12,16 @@ function addGroupRow() {
 						      <div class="panel-body">\
 						      	<div class="form-inline">\
 									<input type="hidden" name="menu_group_num[]" value="'+num_groups+'"/>\
-									<b>Name</b>\
-									<input name="group_name_' + num_groups + '" class="string optional form-control" type="text"/>\
-									<b>Price</b>\
-									<input name="additional_price_' + num_groups + '" class="string optional form-control" type="text"/>\
-									<b>Maximum Allowed</b>\
-									<input name="max_allowed_' + num_groups + '" class="string optional form-control" type="text"/>\
+									<b>Name*</b>\
+									<input data-req="1" name="group_name_' + num_groups + '" class="string optional form-control" type="text"/>\
+									<b>Price*</b>\
+									<input data-req="1" name="additional_price_' + num_groups + '" class="string optional form-control" type="text"/>\
+									<b>Maximum Allowed*</b>\
+									<input data-req="1" name="max_allowed_' + num_groups + '" class="string optional form-control" type="text"/>\
 								</div>\
 								<br/>\
 								<b>Menu Item Content</b>\
-								<input name="menuitemcontent' + num_groups + '[]" placeholder="Name" type="text" class="string optional form-control"/>\
+								<input data-req="1" name="menuitemcontent' + num_groups + '[]" placeholder="Name" type="text" class="string optional form-control"/>\
 								<span id="add-new-row' + num_groups + '"></span>\
 								<br/>\
 								<a class="btn" onclick="addContentRow(' + num_groups + ')">+ Add Choice</a>\

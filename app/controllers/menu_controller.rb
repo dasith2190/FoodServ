@@ -86,7 +86,7 @@ class MenuController < ApplicationController
           end
         end
         
-        #Add new groups and content
+        #Add new groups
         new_groups = params["menu_group_num"]
         if new_groups
           for i in 0..new_groups.count - 1

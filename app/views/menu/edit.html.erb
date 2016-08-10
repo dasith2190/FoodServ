@@ -1,8 +1,8 @@
 <div class="col-md-8">
-<%= simple_form_for @menu_item, url: menu_path(@menu_item.id)  do |f| %>
-	<%= f.input :name, label: "Menu Item Name" %>
-	<%= f.input :description, as: :text %>
-	<%= f.input :price %>				
+<%= simple_form_for @menu_item, url: menu_path(@menu_item.id), html: { id: :edit_order }  do |f| %>
+	<%= f.input :name, label: "Menu Item Name*", label: "Menu Item Name", :input_html => { data: {req: '1'}} %>
+	<%= f.input :description, label: "Description*", as: :text, :input_html => { data: {req: '1'}} %>
+	<%= f.input :price, label: "Price*", :input_html => { data: {req: '1'}} %>				
 	<%= f.input :is_build_your_own, label: "Build Your Own",  :input_html => {:id => "build_your_own"} %>
 	
 	<% if @menu_item.is_build_your_own %>
@@ -22,12 +22,12 @@
 			      <div class="panel-body">
 					<div class="form-inline">
 						<input type = "hidden" name="group_id[]" value="<%= group.id %>"/>
-						<b>Name</b>
-						<input name="group_name_<%= group.id %>" value="<%= group.name %>" class="string optional form-control" type="text"/>
-						<b>Price</b>
-						<input name="additional_price_<%= group.id %>" value="<%= group.additional_price %>" class="string optional form-control" type="text"/>
-						<b>Maximum Allowed</b>
-						<input name="max_allowed_<%= group.id %>" value="<%= group.max_allowed %>" class="string optional form-control" type="text"/>
+						<b>Name*</b>
+						<input data-req="1" name="group_name_<%= group.id %>" value="<%= group.name %>" class="string optional form-control" type="text"/>
+						<b>Price*</b>
+						<input data-req="1" name="additional_price_<%= group.id %>" value="<%= group.additional_price %>" class="string optional form-control" type="text"/>
+						<b>Maximum Allowed*</b>
+						<input data-req="1" name="max_allowed_<%= group.id %>" value="<%= group.max_allowed %>" class="string optional form-control" type="text"/>
 					</div>
 					<br/>
 					<b>Menu Item Content</b>
@@ -59,6 +59,11 @@
 
 <script>
 	var num_groups = <%= @menu_item.MenuItemContentGroup.count %>;
+	$("#edit_order").submit(function (event) {
+		if (!validateFormInputs("edit_order")){
+			event.preventDefault();
+		}
+	});
 	$(document).ready(function() {
 		$(".action-btn").click(function() {
 			var group_id = $(this).data("groupid");
