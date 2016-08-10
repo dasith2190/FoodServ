@@ -13,3 +13,29 @@
  *= require_tree .
  *= require_self
  */
+
+.card-menu-item {
+    float: left;
+	padding: 0px;
+	margin: 5px;
+	border-radius: .25rem;
+    border: 1px solid rgba(0,0,0,.125);
+	max-width: 400px;
+	width: 300px;
+}
+
+.card-menu-item img {
+	width: 100%;
+	max-width: 100%;
+	height: 200px;
+}
+
+.card-menu-item .card-block {
+	height: 200px;
+	padding: 1em;
+}
+
+.card-menu-item .card-btn-wrapper {
+    position: absolute;
+    bottom: 5px;
+}
