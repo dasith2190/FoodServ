@@ -39,3 +39,11 @@
     position: absolute;
     bottom: 5px;
 }
+
+#card-price-wrapper {
+	float: right;
+    position: relative;
+    top: -62px;
+    right: -13.5px;
+    background-color: #eee;
+}

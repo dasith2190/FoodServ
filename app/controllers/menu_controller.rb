@@ -1,5 +1,7 @@
 class MenuController < ApplicationController
-    before_filter :authenticate_user!
+  before_filter :authenticate_user!
+  
+  
   def new
     @menu_item = MenuItem.new
   end
@@ -108,9 +110,27 @@ class MenuController < ApplicationController
   
   
   def show
-      @menu_item = MenuItem.find(params[:id])
+      @menu_items = MenuItem.where(id: params[:id], is_deleted: false)
   end
 
+
+  def index
+    @menu_items = MenuItem.where(user_id: current_user.id, is_deleted: false)  
+  end
+  
+  
+  def destroy
+    @menu_item = RequestCar.find_by!(:id=>params[:id], :user_id=>current_user.id)
+    if @menu_item.present?
+      @menu_item.is_deleted = false
+    end
+    respond_to do |format|
+      format.html { redirect_to '/menu', notice: 'Order was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+  
+  
   private
 
   def menu_params
